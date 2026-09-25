@@ -9,12 +9,20 @@ import androidx.core.widget.ContentLoadingProgressBar
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.codepath.asynchttpclient.RequestParams
+import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler
+import com.codepath.asynchttpclient.AsyncHttpClient
+import okhttp3.Headers
+import android.util.Log
+import org.json.JSONArray
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 
 // --------------------------------//
 // CHANGE THIS TO BE YOUR API KEY  //
 // --------------------------------//
-private const val API_KEY = "<YOUR-API-KEY-HERE>"
+private const val API_KEY = "zo7XkV1hkoJ55mdktPxuIMGTbRZsfRZlAqmJvzQL"
 
 /*
  * The class for the only fragment in the app, which contains the progress bar,
@@ -48,11 +56,19 @@ class NationalParksFragment : Fragment(), OnListFragmentInteractionListener {
         progressBar.show()
 
         // Create and set up an AsyncHTTPClient() here
+        val client = AsyncHttpClient()
 
         // Using the client, perform the HTTP request
+        val params = RequestParams()
+        params["api_key"] = API_KEY
 
-        /* Uncomment me once you complete the above sections!
-        {
+
+// Using the client, perform the HTTP request
+        client[
+            "https://developer.nps.gov/api/v1/parks",
+            params,
+            object : JsonHttpResponseHandler()
+            {
             /*
              * The onSuccess function gets called when
              * HTTP response status is "200 OK"
@@ -66,8 +82,18 @@ class NationalParksFragment : Fragment(), OnListFragmentInteractionListener {
                 progressBar.hide()
 
                 //TODO - Parse JSON into Models
+                // Filter out the "data" JSON array and turn into a String
+                val dataJSON = json.jsonObject.get("data") as JSONArray
+                val parksRawJSON = dataJSON.toString()
 
-                val models : List<NationalPark> = mutableListOf() // Fix me!
+                // Create a Gson instance to help parse the raw JSON
+                val gson = Gson()
+
+                // Tell Gson what type we’re expecting (a list of NationalPark objects)
+                val arrayParkType = object : TypeToken<List<NationalPark>>() {}.type
+
+                // Convert the raw JSON string into a list of actual NationalPark data models
+                val models: List<NationalPark> = gson.fromJson(parksRawJSON, arrayParkType)
                 recyclerView.adapter = NationalParksRecyclerViewAdapter(models, this@NationalParksFragment)
 
                 // Look for this in Logcat:
@@ -93,8 +119,6 @@ class NationalParksFragment : Fragment(), OnListFragmentInteractionListener {
                 }
             }
         }]
-        */
-
     }
 
     /*

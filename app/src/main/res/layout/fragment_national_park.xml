@@ -10,22 +10,43 @@
     <!-- Park Name -->
     <TextView
         android:id="@+id/park_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="Park Name"
         android:textAppearance="?attr/textAppearanceListItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Park Description -->
+
     <TextView
         android:id="@+id/park_description"
-        android:text="Park Description"
-        android:textAppearance="?attr/textAppearanceListItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/park_name"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_marginTop="20dp"
+        android:text="Park Description"
+        android:textAppearance="?attr/textAppearanceListItem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/park_image" />
+
+    <TextView
+        android:id="@+id/park_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Park Location"
+        android:textAppearance="?attr/textAppearanceListItem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/park_name" />
+
+    <ImageView
+        android:id="@+id/park_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/park_location"
+        tools:srcCompat="@tools:sample/avatars" />
 
     <!-- TODO: Add park image -->
     <!-- TODO: Add location or other details -->
